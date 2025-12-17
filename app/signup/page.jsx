@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,10 +13,61 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import { z } from "zod";
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "@/schemas/loginSignupSchema";
+import { isAuthenticated, setSession } from "@/utils/auth";
+import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const router = useRouter();
+
+  //  Redirecting if already authenticated---------
+  useEffect(() => {
+    if (isAuthenticated()) {
+      router.replace("/");
+    }
+  }, [router]);
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        alert(result.message);
+        return;
+      }
+      setSession(result.token);
+      router.push("/login");
+      reset();
+
+      alert("Signup successful");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex justify-between bg">
       <section className="w-[60%] flex flex-col items-center justify-center font-sans">
@@ -32,7 +84,7 @@ const SignupPage = () => {
           </CardHeader>
 
           <CardContent>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
@@ -40,32 +92,47 @@ const SignupPage = () => {
                     id="email"
                     type="email"
                     placeholder="Email"
-                    required
                     className={"h-12 bg-gray-100 placeholder:text-gray-400"}
+                    {...register("email")}
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
                   <Input
                     id="password"
                     type="password"
-                    required
                     placeholder="Password"
                     className={"h-12 bg-gray-100 placeholder:text-gray-400"}
+                    {...register("password")}
                   />
+                  {errors.password && (
+                    <p className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mt-5">
-                <input id="checkbox" type="checkbox" required />
+                <input id="checkbox" type="checkbox" {...register("agree")} />
                 <label className="ml-2 text-sm">
                   I agree to all Term, Privacy Policy and fees
                 </label>
               </div>
+              {errors.agree && (
+                <p className="text-red-500 text-sm">{errors.agree.message}</p>
+              )}
+
               <Button
                 type="submit"
                 className="w-full mt-5 py-6 rounded-2xl text-md font-normal tracking-wider bg-violet-500"
+                disabled={loading}
               >
-                Get Started
+                {loading ? "Loading... " : "Get Started"}
               </Button>
             </form>
           </CardContent>
