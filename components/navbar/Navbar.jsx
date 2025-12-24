@@ -1,7 +1,13 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { getuserFromToken, logout } from "@/utils/auth";
 
 const Navbar = ({ onMenuClick, backGround }) => {
+  const [open, setOpen] = useState(false);
+  const user = getuserFromToken();
+
   return (
     <nav
       className={`fixed top-0 z-50 w-full bg-neutral-primary-soft border-b border-default ${
@@ -14,7 +20,7 @@ const Navbar = ({ onMenuClick, backGround }) => {
             <button
               onClick={onMenuClick}
               type="button"
-              className="lg:hidden cursor-pointer text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium   font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+              className="xl:hidden cursor-pointer text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium  font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
             >
               <span className="sr-only">Open sidebar</span>
               <svg
@@ -40,6 +46,7 @@ const Navbar = ({ onMenuClick, backGround }) => {
                 width={30}
                 height={20}
                 alt="dashboard-img"
+                style={{ width: "auto", height: "auto" }}
               />
               <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white hidden lg:block">
                 Dashboard
@@ -47,7 +54,7 @@ const Navbar = ({ onMenuClick, backGround }) => {
             </section>
           </div>
 
-          <form className="md:flex items-center hidden lg:w-lg xl:w-2xl mx-auto space-x-2 gap-x-6 absolute ml-40 lg:ml-74">
+          <form className="md:flex items-center hidden lg:w-md xl:w-2xl mx-auto space-x-2 gap-x-6 absolute ml-26 lg:ml-55 xl:ml-74">
             <label className="sr-only">Search</label>
             <div className="relative w-full bg-white rounded-lg outline">
               {/* <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div> */}
@@ -85,18 +92,54 @@ const Navbar = ({ onMenuClick, backGround }) => {
           </form>
 
           <div className="flex items-center">
-            <div className="flex items-center ms-3 gap-x-8">
+            <div className="flex items-center ms-3 gap-x-8 ">
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setOpen((prev) => !prev)}
+                  className="flex items-center gap-x-2 rounded-lg bg-gray-100 border border-gray-300 px-4 py-1 cursor-pointer capitalize"
+                >
+                  {user?.role}
+                  {open ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </button>
+
+                {/* Dropdown */}
+                {open && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 rounded-lg border border-gray-200 bg-white shadow-lg">
+                    <ul className="text-sm text-gray-700 px-2">
+                      <li className="py-2 border-b-2 font-semibold">{user?.email}</li>
+                      <li>
+                        <button
+                          onClick={() => {
+                            logout();
+                          }}
+                          className="block w-full text-leftpy-2 hover:bg-red-500 hover:text-white cursor-pointer py-2 rounded-md text-red-600 font-semibold"
+                        >
+                          Logout
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
               <Image
                 src="/plain_dash.png"
                 width={30}
                 height={20}
                 alt="dashboard-img"
+                style={{ width: "auto", height: "auto" }}
               />
               <Image
                 src="/alert.png"
                 width={26}
                 height={20}
                 alt="dashboard-img"
+                style={{ width: "auto", height: "auto" }}
               />
               <div>
                 <button

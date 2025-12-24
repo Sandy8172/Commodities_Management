@@ -7,7 +7,7 @@ import { verifyToken } from "./jwt";
 export function setSession(token) {
   Cookies.set("token", token, {
     expires: 1, // 1 day
-    secure: true, // only HTTPS
+    secure: process.env.NODE_ENV === "production",
     sameSite: "strict", // protect from CSRF
   });
 }
@@ -20,7 +20,7 @@ export function getSession() {
 // Logout function
 export function logout() {
   Cookies.remove("token");
-  window.location.href = "/sign-in";
+  window.location.href = "/login";
 }
 
 // Authentication function -----------

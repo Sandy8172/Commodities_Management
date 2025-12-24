@@ -58,7 +58,7 @@ const SignupPage = () => {
         return;
       }
       setSession(result.token);
-      router.push("/login");
+      router.push("/");
       reset();
 
       alert("Signup successful");

@@ -16,13 +16,13 @@ import {
 
 export const sidebarItems = [
   {
-    type: "item", // 👈 non-collapsible
+    type: "item",
     title: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    type: "group", // 👈 collapsible
+    type: "group",
     title: "Store",
     icon: Store,
     children: [
@@ -57,8 +57,19 @@ export const sidebarItems = [
   },
 ];
 
-const Sidebar = ({ sidebarOpen, children, backGround }) => {
-  const [openItem, setOpenItem] = useState(null);
+const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
+  const [openItem, setOpenItem] = useState([]);
+
+  const handleItemOpen = (value) => {
+    setOpenItem((prev) => {
+      const existingItem = prev.includes(value);
+      if (existingItem) {
+        return prev.filter((i) => i !== value);
+      } else {
+        return [...prev, value];
+      }
+    });
+  };
 
   return (
     <>
@@ -67,7 +78,7 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
     fixed top-15 left-0 z-40 w-74 h-full
     transition-transform
     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-    lg:translate-x-0 ${backGround ? "bg-gray-200" : "bg-white"}
+    xl:translate-x-0 ${backGround ? "bg-gray-200" : "bg-white"}
   `}
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default ">
@@ -78,7 +89,9 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
                   <li key={item.title}>
                     <Link
                       href={item.href}
-                      className="flex items-center gap-x-4 px-2 py-3 text-body font-sans border border-gray-300 rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group bg-white rounded-lg hover:bg-gray-100"
+                      className={`flex items-center gap-x-4 px-2 py-3 text-body font-sans border border-gray-300 rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group bg-white rounded-lg hover:bg-gray-100 ${
+                        currentPath === item.href ? "text-blue-700" : ""
+                      }`}
                     >
                       <item.icon />
                       <span>{item.title}</span>
@@ -87,17 +100,15 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
                 );
               }
               return (
-                <li
-                  onClick={() =>
-                    setOpenItem((prev) => (!prev ? item.title : null))
-                  }
-                  key={item.title}
-                >
+                <li key={item.title}>
                   <button
                     type="button"
+                    onClick={() => handleItemOpen(item.title)}
                     className={`flex items-center font-sans w-full justify-between px-2 py-3 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group rounded-lg hover:bg-gray-100 ${
-                      openItem === item.title
-                        ? backGround ? "bg-gray-200" :"text-gray-600"
+                      openItem.includes(item.title)
+                        ? backGround
+                          ? "bg-gray-200"
+                          : "text-gray-600"
                         : "bg-white border border-gray-300 "
                     }`}
                     aria-controls="dropdown-example"
@@ -107,7 +118,7 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
                       <item.icon />
                       <span>{item.title}</span>
                     </section>
-                    {openItem === item.title ? (
+                    {openItem.includes(item.title) ? (
                       <ChevronUp className="h-4 w-4" />
                     ) : (
                       <ChevronDown className="h-4 w-4" />
@@ -121,7 +132,7 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
                     <ul
                       id="dropdown-example"
                       className={`py-2 space-y-2  ${
-                        openItem === item.title ? "block" : "hidden"
+                        openItem.includes(item.title) ? "block" : "hidden"
                       }`}
                     >
                       {item.children.map((child) => (
@@ -130,6 +141,8 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
                             href={child.href}
                             className={`flex items-center gap-x-4 px-2 py-3 text-md font-sans  rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group  rounded-lg pl-10 hover:bg-white ${
                               backGround ? "bg-gray-200" : "bg-white"
+                            } ${
+                              currentPath === child.href ? "text-blue-700" : ""
                             } `}
                           >
                             <child.icon />
@@ -147,7 +160,7 @@ const Sidebar = ({ sidebarOpen, children, backGround }) => {
       </aside>
 
       <div
-        className={`p-4 lg:ml-74 mt-15 min-h-screen ${
+        className={`p-4 xl:ml-74 mt-15 min-h-screen ${
           backGround ? "bg-gray-200" : "bg-white"
         } `}
       >
