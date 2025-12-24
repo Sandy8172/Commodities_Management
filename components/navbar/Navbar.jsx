@@ -1,9 +1,13 @@
 import React from "react";
 import Image from "next/image";
 
-const Navbar = ({ onMenuClick }) => {
+const Navbar = ({ onMenuClick, backGround }) => {
   return (
-    <nav className="fixed top-0 z-50 w-full bg-neutral-primary-soft border-b border-default">
+    <nav
+      className={`fixed top-0 z-50 w-full bg-neutral-primary-soft border-b border-default ${
+        backGround ? "bg-gray-200" : "bg-white"
+      }`}
+    >
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between relative">
           <div className="flex items-center justify-start rtl:justify-end">

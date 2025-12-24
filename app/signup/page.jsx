@@ -41,6 +41,8 @@ const SignupPage = () => {
   }, [router]);
 
   const onSubmit = async (data) => {
+    console.log(JSON.stringify(data));
+
     setLoading(true);
     try {
       const res = await fetch("/api/auth/signup", {

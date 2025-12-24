@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   LayoutDashboard,
   Store,
@@ -27,12 +28,12 @@ export const sidebarItems = [
     children: [
       {
         title: "Products",
-        href: "/store/products",
+        href: "/products",
         icon: Package,
       },
       {
         title: "Add Product",
-        href: "/store/add-product",
+        href: "/add-product",
         icon: PlusCircle,
       },
     ],
@@ -56,7 +57,7 @@ export const sidebarItems = [
   },
 ];
 
-const Sidebar = ({ sidebarOpen, children }) => {
+const Sidebar = ({ sidebarOpen, children, backGround }) => {
   const [openItem, setOpenItem] = useState(null);
 
   return (
@@ -66,7 +67,7 @@ const Sidebar = ({ sidebarOpen, children }) => {
     fixed top-15 left-0 z-40 w-74 h-full
     transition-transform
     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-    lg:translate-x-0
+    lg:translate-x-0 ${backGround ? "bg-gray-200" : "bg-white"}
   `}
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default ">
@@ -75,13 +76,13 @@ const Sidebar = ({ sidebarOpen, children }) => {
               if (item.type === "item") {
                 return (
                   <li key={item.title}>
-                    <a
+                    <Link
                       href={item.href}
-                      className="flex items-center gap-x-4 px-2 py-3 text-body font-sans rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group bg-white rounded-lg hover:bg-gray-100"
+                      className="flex items-center gap-x-4 px-2 py-3 text-body font-sans border border-gray-300 rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group bg-white rounded-lg hover:bg-gray-100"
                     >
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </li>
                 );
               }
@@ -94,13 +95,15 @@ const Sidebar = ({ sidebarOpen, children }) => {
                 >
                   <button
                     type="button"
-                    className={`flex items-center w-full justify-between px-2 py-3 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group rounded-lg hover:bg-gray-100 ${
-                      openItem === item.title ? "bg-gray-200" : "bg-white"
+                    className={`flex items-center font-sans w-full justify-between px-2 py-3 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group rounded-lg hover:bg-gray-100 ${
+                      openItem === item.title
+                        ? backGround ? "bg-gray-200" :"text-gray-600"
+                        : "bg-white border border-gray-300 "
                     }`}
                     aria-controls="dropdown-example"
                     data-collapse-toggle="dropdown-example"
                   >
-                    <section className="flex items-center gap-x-4">
+                    <section className="flex items-center gap-x-4 ">
                       <item.icon />
                       <span>{item.title}</span>
                     </section>
@@ -111,8 +114,8 @@ const Sidebar = ({ sidebarOpen, children }) => {
                     )}
                   </button>
                   <section
-                    className={`rounded-lg ${
-                      openItem === item.title ? "bg-gray-200" : "bg-white"
+                    className={`rounded-lg  ${
+                      backGround ? "bg-gray-200" : "bg-white"
                     }`}
                   >
                     <ul
@@ -123,13 +126,15 @@ const Sidebar = ({ sidebarOpen, children }) => {
                     >
                       {item.children.map((child) => (
                         <li key={child.title}>
-                          <a
+                          <Link
                             href={child.href}
-                            className="flex items-center gap-x-4 px-2 py-3 text-md font-sans  rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group  rounded-lg pl-10 hover:bg-white"
+                            className={`flex items-center gap-x-4 px-2 py-3 text-md font-sans  rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group  rounded-lg pl-10 hover:bg-white ${
+                              backGround ? "bg-gray-200" : "bg-white"
+                            } `}
                           >
                             <child.icon />
                             <span className="font-normal">{child.title}</span>
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -141,7 +146,13 @@ const Sidebar = ({ sidebarOpen, children }) => {
         </div>
       </aside>
 
-      <div className="p-4 lg:ml-74 mt-15">{children}</div>
+      <div
+        className={`p-4 lg:ml-74 mt-15 min-h-screen ${
+          backGround ? "bg-gray-200" : "bg-white"
+        } `}
+      >
+        {children}
+      </div>
     </>
   );
 };
