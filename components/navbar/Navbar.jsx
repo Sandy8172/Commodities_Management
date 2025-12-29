@@ -1,16 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  LayoutDashboard,
+  BellRing,
+} from "lucide-react";
 import { getuserFromToken, logout } from "@/utils/auth";
+import ThemeToggle from "../ThemeToggle";
 
 const Navbar = ({ onMenuClick, backGround }) => {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const user = getuserFromToken();
+  useEffect(() => setMounted(true), []);
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full bg-neutral-primary-soft border-b border-default ${
+      className={`fixed top-0 z-50 dark:bg-black w-full bg-neutral-primary-soft border-b border-default ${
         backGround ? "bg-gray-200" : "bg-white"
       }`}
     >
@@ -54,14 +62,14 @@ const Navbar = ({ onMenuClick, backGround }) => {
             </section>
           </div>
 
-          <form className="md:flex items-center hidden lg:w-md xl:w-2xl mx-auto space-x-2 gap-x-6 absolute ml-26 lg:ml-55 xl:ml-74">
+          <form className="md:flex items-center hidden lg:w-md xl:w-lg [@media(min-width:1430px)]:w-2xl [@media(min-width:1530px)]:w-3xl mx-auto space-x-2 gap-x-6 absolute ml-26 lg:ml-55 xl:ml-74">
             <label className="sr-only">Search</label>
-            <div className="relative w-full bg-white rounded-lg outline">
+            <div className="relative w-full bg-white dark:bg-black rounded-lg outline">
               {/* <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div> */}
               <input
                 type="text"
                 id="voice-search"
-                className="block w-full ps-2 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base  shadow-xs placeholder:text-lg font-sans focus:border-0 focus:outline-0"
+                className="block w-full ps-2 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base  shadow-xs placeholder:text-lg font-sans focus:border-0 focus:outline-0 dark:placeholder:text-gray-300"
                 placeholder="Search "
                 required
               />
@@ -92,14 +100,15 @@ const Navbar = ({ onMenuClick, backGround }) => {
           </form>
 
           <div className="flex items-center">
-            <div className="flex items-center ms-3 gap-x-8 ">
+            <div className="flex items-center ms-3 gap-x-7 ">
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setOpen((prev) => !prev)}
-                  className="flex items-center gap-x-2 rounded-lg bg-gray-100 border border-gray-300 px-4 py-1 cursor-pointer capitalize"
+                  className="flex items-center gap-x-1 rounded-lg bg-gray-100 text-sm lg:text-base dark:bg-gray-900 border border-gray-300 dark:border-gray-700 px-3 py-1 cursor-pointer capitalize"
                 >
-                  {user?.role}
+                  {mounted && user?.role ? user.role : null}
+
                   {open ? (
                     <ChevronUp className="h-4 w-4" />
                   ) : (
@@ -109,15 +118,17 @@ const Navbar = ({ onMenuClick, backGround }) => {
 
                 {/* Dropdown */}
                 {open && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 rounded-lg border border-gray-200 bg-white shadow-lg">
-                    <ul className="text-sm text-gray-700 px-2">
-                      <li className="py-2 border-b-2 font-semibold">{user?.email}</li>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg">
+                    <ul className="text-sm text-gray-700 px-2 dark:text-gray-200">
+                      <li className="py-2 border-b-2 font-semibold text-sm lg:text-balance ">
+                        {user?.email}
+                      </li>
                       <li>
                         <button
                           onClick={() => {
                             logout();
                           }}
-                          className="block w-full text-leftpy-2 hover:bg-red-500 hover:text-white cursor-pointer py-2 rounded-md text-red-600 font-semibold"
+                          className="block w-full text-sm lg:text-balance hover:bg-red-500 dark:hover:bg-red-800 hover:text-white dark:hover:text-white cursor-pointer py-2 rounded-md text-red-600 dark:text-red-400 font-semibold"
                         >
                           Logout
                         </button>
@@ -126,27 +137,14 @@ const Navbar = ({ onMenuClick, backGround }) => {
                   </div>
                 )}
               </div>
+              <ThemeToggle />
+              <LayoutDashboard className="h-8 w-8 hidden [@media(min-width:1160px)]:block" />
+              <BellRing className="h-8 w-8 hidden [@media(min-width:1100px)]:block" />
 
-              <Image
-                src="/plain_dash.png"
-                width={30}
-                height={20}
-                alt="dashboard-img"
-                style={{ width: "auto", height: "auto" }}
-              />
-              <Image
-                src="/alert.png"
-                width={26}
-                height={20}
-                alt="dashboard-img"
-                style={{ width: "auto", height: "auto" }}
-              />
               <div>
                 <button
                   type="button"
                   className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                  aria-expanded="false"
-                  data-dropdown-toggle="dropdown-user"
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -155,60 +153,6 @@ const Navbar = ({ onMenuClick, backGround }) => {
                     alt="user photo"
                   />
                 </button>
-              </div>
-              <div
-                className="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
-                id="dropdown-user"
-              >
-                <div
-                  className="px-4 py-3 border-b border-default-medium"
-                  role="none"
-                >
-                  <p className="text-sm font-medium text-heading" role="none">
-                    Neil Sims
-                  </p>
-                  <p className="text-sm text-body truncate" role="none">
-                    neil.sims@flowbite.com
-                  </p>
-                </div>
-                <ul className="p-2 text-sm text-body font-medium" role="none">
-                  <li>
-                    <a
-                      href="#"
-                      className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                      role="menuitem"
-                    >
-                      Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                      role="menuitem"
-                    >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                      role="menuitem"
-                    >
-                      Earnings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                      role="menuitem"
-                    >
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

@@ -2,12 +2,7 @@
 
 import React, { useState } from "react";
 import { useProducts } from "@/hooks/useProducts";
-import {
-  useCreateProduct,
-  useDeleteProduct,
-  useUpdateProduct,
-} from "@/hooks/useProductMutations";
-import useStore from "@/store/store";
+import { useDeleteProduct } from "@/hooks/useProductMutations";
 import KpiCard from "@/components/ui/KpiCard";
 
 const productName = ["name", "view", "price", "revenue"];
@@ -32,11 +27,11 @@ const Products = () => {
   const currentItems = products?.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="flex items-start gap-x-10">
+    <div className="flex items-start gap-x-10 flex-wrap md:flex-nowrap">
       <div className="w-[70%]">
-        <div className="relative w-full h-fit overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
+        <div className="relative w-full dark:border dark:bg-zinc-900 rounded-xl p-4 h-fit overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
           <table className="w-full text-sm text-left rtl:text-right text-body">
-            <thead className="text-gray-600 border-b border-t border-gray-300 text-lg">
+            <thead className="text-gray-600 border-b border-t dark:text-gray-400 border-gray-300 dark:border-gray-500 text-lg">
               <tr>
                 {/* <th scope="col" className="px-4 py-3 font-light font-sans"></th> */}
                 <th
@@ -70,7 +65,7 @@ const Products = () => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value=""
+                      value={p.id}
                       className="w-5 h-5 border border-default-medium rounded-xs bg-neutral-secondary-medium"
                     />
                   </td>
@@ -79,7 +74,7 @@ const Products = () => {
                       key={head}
                       scope="row"
                       className={`px-4 py-4 ${
-                        head === "name" ? "font-semibold pl-0" : ""
+                        head === "name" ? "font-semibold" : ""
                       }`}
                     >
                       {head === "price" || head === "revenue" ? "$" : ""}
@@ -87,11 +82,11 @@ const Products = () => {
                     </td>
                   ))}
                   <td className="px-4 py-4 flex items-center gap-x-4 text-xs text-gray-500">
-                    <button className="hover:bg-blue-300 rounded-sm p-1 hover:text-white cursor-pointer">
+                    <button className="hover:bg-blue-300 dark:hover:bg-blue-500 rounded-xs p-1 dark:text-gray-400 hover:text-white dark:hover:text-white cursor-pointer dark:border border-gray-500 dark:px-2">
                       Edit
                     </button>
                     <button
-                      className="hover:bg-red-300 rounded-sm p-1 hover:text-white cursor-pointer"
+                      className="hover:bg-red-300 dark:hover:bg-red-500 dark:text-gray-400 rounded-xs p-1 hover:text-white dark:hover:text-white cursor-pointer dark:border border-gray-500 dark:px-2"
                       onClick={() => {
                         deleteProduct.mutate(p.id);
                       }}

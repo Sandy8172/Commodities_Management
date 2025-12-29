@@ -2,7 +2,7 @@ import React from "react";
 
 const KpiCard = ({ title, value }) => {
   return (
-    <div className="flex justify-between bg-white rounded-2xl bg-neutral-primary-soft  max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+    <div className="flex justify-between bg-white dark:bg-zinc-900 rounded-2xl bg-neutral-primary-soft  max-w-sm p-6 border border-default dark:border-zinc-700 rounded-base shadow-xs hover:bg-neutral-secondary-medium">
       <section>
         <h3 className="mb-3 text-xl font-semibold tracking-tight  text-heading leading-8">
           {title}

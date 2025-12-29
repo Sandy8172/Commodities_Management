@@ -32,7 +32,7 @@ const MainLayout = ({ children }) => {
           </h2>
           <Button
             asChild
-            className={`capitalize bg-blue-600 font-sans font-light tracking-wider text-lg py-5 ${
+            className={`capitalize bg-blue-600 font-sans font-light tracking-wider text-lg py-5 dark:text-white ${
               pathName === "/add-product" ? "hidden" : ""
             }`}
           >

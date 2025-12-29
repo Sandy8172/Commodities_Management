@@ -16,7 +16,7 @@ const DashboardPage = () => {
   return (
     <section className="space-y-6 ">
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 dark:text-white ">
         <KpiCard title="Total Earning" value={`$ ${kpis.totalEarnings}`} />
         <KpiCard title="Views" value={`+ ${kpis.views}`} />
         <KpiCard title="Total Sales" value={`+ ${kpis.totalSales}`} />

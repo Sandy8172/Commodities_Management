@@ -3,9 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-
 select option {
-  @apply bg-gray-100 text-gray-500 text-sm font-sans;
+  @apply bg-gray-100 text-gray-500 text-sm font-sans dark:text-gray-300 dark:bg-zinc-800;
 }
 
 select option:checked {
@@ -132,7 +131,6 @@ select option:checked {
     @apply bg-background text-foreground;
   }
 }
-
 
 @layer base {
   :root {

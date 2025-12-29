@@ -45,12 +45,12 @@ export const sidebarItems = [
     children: [
       {
         title: "Traffic",
-        href: "/analytics/traffic",
+        href: "/traffic",
         icon: TrendingUp,
       },
       {
         title: "Earnings",
-        href: "/analytics/earnings",
+        href: "/earnings",
         icon: DollarSign,
       },
     ],
@@ -76,7 +76,7 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
       <aside
         className={`
     fixed top-15 left-0 z-40 w-74 h-full
-    transition-transform
+    transition-transform dark:bg-black dark:text-gray-300
     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
     xl:translate-x-0 ${backGround ? "bg-gray-200" : "bg-white"}
   `}
@@ -89,8 +89,8 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
                   <li key={item.title}>
                     <Link
                       href={item.href}
-                      className={`flex items-center gap-x-4 px-2 py-3 text-body font-sans border border-gray-300 rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group bg-white rounded-lg hover:bg-gray-100 ${
-                        currentPath === item.href ? "text-blue-700" : ""
+                      className={`flex items-center gap-x-4 px-2 py-3 text-body font-sans border border-gray-300 dark:border-gray-700 rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group bg-white rounded-lg hover:bg-gray-100 dark:bg-zinc-950 ${
+                        currentPath === item.href ? "text-blue-700 dark:text-blue-400" : ""
                       }`}
                     >
                       <item.icon />
@@ -104,12 +104,12 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
                   <button
                     type="button"
                     onClick={() => handleItemOpen(item.title)}
-                    className={`flex items-center font-sans w-full justify-between px-2 py-3 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group rounded-lg hover:bg-gray-100 ${
+                    className={`flex items-center font-sans w-full justify-between px-2 py-3 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 dark:text-gray-300 ${
                       openItem.includes(item.title)
                         ? backGround
-                          ? "bg-gray-200"
-                          : "text-gray-600"
-                        : "bg-white border border-gray-300 "
+                          ? "bg-gray-200 dark:bg-black"
+                          : "text-gray-600 dark:text-gray-400"
+                        : "bg-white border border-gray-300 dark:bg-zinc-950 dark:border-gray-700"
                     }`}
                     aria-controls="dropdown-example"
                     data-collapse-toggle="dropdown-example"
@@ -126,7 +126,7 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
                   </button>
                   <section
                     className={`rounded-lg  ${
-                      backGround ? "bg-gray-200" : "bg-white"
+                      backGround ? "bg-gray-200 dark:bg-black" : "bg-white dark:bg-black"
                     }`}
                   >
                     <ul
@@ -140,9 +140,9 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
                           <Link
                             href={child.href}
                             className={`flex items-center gap-x-4 px-2 py-3 text-md font-sans  rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group  rounded-lg pl-10 hover:bg-white ${
-                              backGround ? "bg-gray-200" : "bg-white"
+                              backGround ? "bg-gray-200 dark:bg-black" : "bg-white dark:bg-zinc-950"
                             } ${
-                              currentPath === child.href ? "text-blue-700" : ""
+                              currentPath === child.href ? "text-blue-700 dark:text-blue-400" : ""
                             } `}
                           >
                             <child.icon />
@@ -160,7 +160,7 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
       </aside>
 
       <div
-        className={`p-4 xl:ml-74 mt-15 min-h-screen ${
+        className={`p-4 xl:ml-74 mt-15 min-h-screen dark:bg-black ${
           backGround ? "bg-gray-200" : "bg-white"
         } `}
       >

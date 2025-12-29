@@ -2,7 +2,7 @@ import React from "react";
 
 const RecentSales = ({ data }) => {
   return (
-    <div className="bg-white rounded-xl p-6 font-sans">
+    <div className="bg-white rounded-xl p-6 font-sans dark:bg-zinc-900 border dark:border-zinc-700">
       <h3 className="font-semibold text-2xl">Recent Sales</h3>
       <p className="text-sm text-gray-500 mb-8">
         You made {data.length} sales this month
@@ -13,7 +13,7 @@ const RecentSales = ({ data }) => {
           <div key={sale.id} className="flex justify-between">
             <div className="flex items-center gap-x-1">
               <svg
-                className="w-9 h-9 text-gray-400 dark:text-white bg-gray-200 rounded-full"
+                className="w-9 h-9 text-gray-400 dark:text-gray-600 bg-gray-200 rounded-full"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

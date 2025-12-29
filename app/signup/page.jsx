@@ -71,15 +71,15 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex justify-between bg">
+    <div className="flex justify-between dark:bg-black">
       <section className="w-[60%] flex flex-col items-center justify-center font-sans">
-        <Card className="w-full max-w-lg border-none shadow-none">
+        <Card className="w-full max-w-lg border-none shadow-none dark:bg-black">
           <CardHeader>
             <CardTitle className={"text-5xl font-bold text-center "}>
               Welcome Back
             </CardTitle>
             <CardDescription
-              className={"text-center capitalize text-black text-lg mt-2"}
+              className={"text-center capitalize text-black dark:text-white text-lg mt-2"}
             >
               sign up for free
             </CardDescription>
@@ -131,7 +131,7 @@ const SignupPage = () => {
 
               <Button
                 type="submit"
-                className="w-full mt-5 py-6 rounded-2xl text-md font-normal tracking-wider bg-violet-500"
+                className="w-full mt-5 py-6 rounded-2xl text-md font-normal tracking-wider bg-violet-500 dark:bg-violet-900 dark:text-gray-200"
                 disabled={loading}
               >
                 {loading ? "Loading... " : "Get Started"}
