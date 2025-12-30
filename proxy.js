@@ -8,7 +8,8 @@ export function proxy(req) {
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
-    pathname === "/favicon.ico"
+    pathname === "/favicon.ico" ||
+    pathname.match(/\.(png|jpg|jpeg|gif|svg|ico)$/i)
   ) {
     return NextResponse.next();
   }
