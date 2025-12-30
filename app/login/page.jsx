@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/loginSignupSchema";
-import { isAuthenticated, setSession } from "@/utils/auth";
+import { getuserFromToken, isAuthenticated, setSession } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
@@ -55,7 +55,13 @@ const LoginPage = () => {
         return;
       }
       setSession(result.token);
-      router.push("/");
+      const user = await getuserFromToken();
+      if (user?.role === "storekeeper") {
+        router.push("/products");
+      } else {
+        router.push("/dashboard");
+      }
+
       reset();
 
       alert("Login successful");
@@ -69,14 +75,16 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-between dark:bg-black">
-      <section className="w-[60%] flex flex-col items-center justify-center font-sans">
+      <section className="lg:w-[60%] w-full flex flex-col items-center justify-center font-sans">
         <Card className="w-full max-w-lg border-none shadow-none dark:bg-black">
           <CardHeader>
             <CardTitle className={"text-5xl font-bold text-center "}>
               Welcome Back
             </CardTitle>
             <CardDescription
-              className={"text-center capitalize text-lg mt-2 text-black dark:text-white "}
+              className={
+                "text-center capitalize text-lg mt-2 text-black dark:text-white "
+              }
             >
               sign in to your account
             </CardDescription>
@@ -164,7 +172,7 @@ const LoginPage = () => {
         </Card>
       </section>
 
-      <section className="w-[40%]">
+      <section className="lg:w-[40%] hidden lg:block">
         <Image
           src="/SignIn.png"
           alt="Sign in Pic"

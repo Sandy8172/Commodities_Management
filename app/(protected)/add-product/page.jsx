@@ -10,7 +10,7 @@ const Page = () => {
   const createProduct = useCreateProduct(() => {
     alert("Product added successfully!");
     if (formRef.current) {
-      formRef.current.reset(); // reset the form
+      formRef.current.reset(); 
     }
   });
 

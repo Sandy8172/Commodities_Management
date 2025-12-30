@@ -25,7 +25,6 @@ ChartJS.register(
 
 const OverviewChart = ({ data }) => {
   const isDark = useThemeStore((state) => state.theme === "dark");
-  console.log(isDark);
 
   const chartData = {
     labels: data.map((ele) => ele.month),

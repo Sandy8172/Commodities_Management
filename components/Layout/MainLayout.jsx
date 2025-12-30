@@ -33,7 +33,7 @@ const MainLayout = ({ children }) => {
           <Button
             asChild
             className={`capitalize bg-blue-600 font-sans font-light tracking-wider text-lg py-5 dark:text-white ${
-              pathName === "/add-product" ? "hidden" : ""
+              pathName === "/add-product" || pathName === "/" ? "hidden" : ""
             }`}
           >
             <Link href={"/add-product"}>+ add new product</Link>
@@ -41,6 +41,7 @@ const MainLayout = ({ children }) => {
         </div>
 
         {children}
+        
       </Sidebar>
     </>
   );

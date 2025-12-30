@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "@/schemas/loginSignupSchema";
-import { isAuthenticated, setSession } from "@/utils/auth";
+import { getuserFromToken, isAuthenticated, setSession } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
@@ -41,8 +41,6 @@ const SignupPage = () => {
   }, [router]);
 
   const onSubmit = async (data) => {
-    console.log(JSON.stringify(data));
-
     setLoading(true);
     try {
       const res = await fetch("/api/auth/signup", {
@@ -58,7 +56,13 @@ const SignupPage = () => {
         return;
       }
       setSession(result.token);
-      router.push("/");
+      const user = await getuserFromToken();
+
+      if (user?.role === "storekeeper") {
+        router.push("/products");
+      } else {
+        router.push("/dashboard");
+      }
       reset();
 
       alert("Signup successful");
@@ -72,14 +76,16 @@ const SignupPage = () => {
 
   return (
     <div className="flex justify-between dark:bg-black">
-      <section className="w-[60%] flex flex-col items-center justify-center font-sans">
+      <section className="w-full lg:w-[60%] flex flex-col items-center justify-center font-sans">
         <Card className="w-full max-w-lg border-none shadow-none dark:bg-black">
           <CardHeader>
             <CardTitle className={"text-5xl font-bold text-center "}>
               Welcome Back
             </CardTitle>
             <CardDescription
-              className={"text-center capitalize text-black dark:text-white text-lg mt-2"}
+              className={
+                "text-center capitalize text-black dark:text-white text-lg mt-2"
+              }
             >
               sign up for free
             </CardDescription>
@@ -174,7 +180,7 @@ const SignupPage = () => {
         </Card>
       </section>
 
-      <section className="w-[40%]">
+      <section className="lg:w-[40%] hidden lg:block">
         <Image
           src="/SignIn.png"
           alt="Sign in Pic"

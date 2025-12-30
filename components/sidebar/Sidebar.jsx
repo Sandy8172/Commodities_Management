@@ -13,6 +13,7 @@ import {
   ChevronUp,
   ChevronDown,
 } from "lucide-react";
+import Footer from "../Footer";
 
 export const sidebarItems = [
   {
@@ -81,7 +82,7 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
     xl:translate-x-0 ${backGround ? "bg-gray-200" : "bg-white"}
   `}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default ">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft ">
           <ul className="space-y-2 font-medium ">
             {sidebarItems.map((item) => {
               if (item.type === "item") {
@@ -166,6 +167,7 @@ const Sidebar = ({ sidebarOpen, children, backGround, currentPath }) => {
       >
         {children}
       </div>
+      <Footer/>
     </>
   );
 };

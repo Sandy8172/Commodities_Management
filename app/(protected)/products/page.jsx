@@ -15,7 +15,7 @@ const Products = () => {
 
   const itemsPerPage = 10;
 
-  // console.log(products);
+  
   if (isLoading) return <div> Loading </div>;
   if (error) return <div> Something went wrong </div>;
 
