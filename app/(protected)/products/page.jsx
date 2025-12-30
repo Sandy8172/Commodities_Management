@@ -28,7 +28,7 @@ const Products = () => {
 
   return (
     <div className="flex items-start gap-x-10 flex-wrap md:flex-nowrap">
-      <div className="w-[70%]">
+      <div className="md:w-[70%]  overflow-x-auto">
         <div className="relative w-full dark:border dark:bg-zinc-900 rounded-xl p-4 h-fit overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
           <table className="w-full text-sm text-left rtl:text-right text-body">
             <thead className="text-gray-600 border-b border-t dark:text-gray-400 border-gray-300 dark:border-gray-500 text-lg">
@@ -153,7 +153,7 @@ const Products = () => {
         </nav>
       </div>
 
-      <div className="w-[30%]">
+      <div className="md:w-[30%]">
         <KpiCard title={"Total Earning"} value={"+12100"} />
       </div>
     </div>

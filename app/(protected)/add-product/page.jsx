@@ -10,7 +10,7 @@ const Page = () => {
   const createProduct = useCreateProduct(() => {
     alert("Product added successfully!");
     if (formRef.current) {
-      formRef.current.reset(); 
+      formRef.current.reset();
     }
   });
 
@@ -31,11 +31,13 @@ const Page = () => {
   };
 
   return (
-    <div className="px-10 py-5">
+    <div className="lg:px-10 py-5">
       {/* product form's navbar */}
       <nav className="flex justify-between items-center dark:bg-zinc-900 dark:p-10 rounded-3xl ">
-        <h3 className="text-2xl font-semibold font-sans">Add New Product</h3>
-        <section>
+        <h3 className="text-xl md:text-2xl font-semibold font-sans">
+          Add New Product
+        </h3>
+        <section className="flex items-center flex-wrap gap-y-4 justify-center">
           <Button
             variant="outline"
             className="mr-2 text-red-500 border-red-400 font-normal font-sans tracking-wider"
@@ -160,8 +162,8 @@ const Page = () => {
               </div>
 
               {/* Discount + Category */}
-              <section className="flex justify-between items-center mt-8 gap-x-10">
-                <div className="flex-1">
+              <section className="flex justify-between items-center mt-8 gap-x-10 flex-wrap">
+                <div className="md:flex-1">
                   <label
                     htmlFor="discount"
                     className="block mb-2.5 text-gray-500 font-medium text-heading font-sans dark:text-gray-300"
@@ -177,7 +179,7 @@ const Page = () => {
                     required
                   />
                 </div>
-                <div className="flex-1">
+                <div className="md:flex-1 mt-8 md:mt-0">
                   <label className="block mb-2.5 text-gray-500 font-medium text-heading font-sans dark:text-gray-300">
                     Discount Category
                   </label>
@@ -198,7 +200,7 @@ const Page = () => {
           </div>
 
           {/* Right side (images) */}
-          <div className="md:w-[35%] flex flex-col gap-y-20 dark:bg-zinc-900 dark:px-10 py-10 dark:rounded-3xl dark:text-gray-300 mt-5 md:mt-0">
+          <div className="w-full md:w-[35%] flex flex-col gap-y-20 dark:bg-zinc-900 dark:px-10 py-10 dark:rounded-3xl dark:text-gray-300 mt-5 md:mt-0">
             <div className="w-full">
               <p className="text-xl font-medium">
                 Preview Product <br />

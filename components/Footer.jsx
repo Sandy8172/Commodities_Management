@@ -3,8 +3,8 @@ import { Diamond, Facebook, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <div className="relative z-50 bg-white px-40 py-10 rounded-t-2xl dark:bg-zinc-900">
-      <div className="flex justify-between items-start pb-20  flex-wrap">
+    <div className="relative z-50 bg-white px-5 md:px-20 lg:px-40 py-10 rounded-t-2xl dark:bg-zinc-900">
+      <div className="flex justify-between items-start pb-20 flex-wrap">
         <section className="lg:w-[30%] mb-10 lg:mb-0">
           <h3 className="mb-5 flex items-center gap-x-8 ">
             <span className="font-bold">

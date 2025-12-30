@@ -27,12 +27,12 @@ const MainLayout = ({ children }) => {
         currentPath={pathName}
       >
         <div className="flex justify-between my-8 items-center">
-          <h2 className="capitalize text-4xl font-sans">
+          <h2 className="capitalize text-3xl md:text-4xl font-sans">
             {pathName.split("/")}
           </h2>
           <Button
             asChild
-            className={`capitalize bg-blue-600 font-sans font-light tracking-wider text-lg py-5 dark:text-white ${
+            className={`capitalize bg-blue-600 font-sans font-light tracking-wider text-xs md:text-lg md:py-5 px-2 md:px-4 dark:text-white ${
               pathName === "/add-product" || pathName === "/" ? "hidden" : ""
             }`}
           >

@@ -67,7 +67,7 @@ const OverviewChart = ({ data }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 col-span-2 dark:bg-zinc-900">
+    <div className="bg-white rounded-xl p-6 lg:col-span-2 dark:bg-zinc-900">
       <Bar data={chartData} options={options} />
     </div>
   );

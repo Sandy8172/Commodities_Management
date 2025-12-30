@@ -2,7 +2,7 @@ import React from "react";
 
 const RecentSales = ({ data }) => {
   return (
-    <div className="bg-white rounded-xl p-6 font-sans dark:bg-zinc-900 border dark:border-zinc-700">
+    <div className="bg-white rounded-xl p-2 font-sans dark:bg-zinc-900 border dark:border-zinc-700">
       <h3 className="font-semibold text-2xl">Recent Sales</h3>
       <p className="text-sm text-gray-500 mb-8">
         You made {data.length} sales this month
@@ -31,11 +31,11 @@ const RecentSales = ({ data }) => {
               </svg>
 
               <section>
-                <p className="font-medium">{sale.name}</p>
-                <p className="text-sm text-gray-500">{sale.email}</p>
+                <p className="text-sm md:text-lg lg:font-medium">{sale.name}</p>
+                <p className="text-xs lg:text-sm text-gray-500">{sale.email}</p>
               </section>
             </div>
-            <span className="font-medium">+${sale.amount}.00</span>
+            <span className="font-  lg:font-medium">+${sale.amount}.00</span>
           </div>
         ))}
       </div>

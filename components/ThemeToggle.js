@@ -15,7 +15,7 @@ export default function ThemeToggle() {
   return (
     <Button
       onClick={toggleTheme}
-      className="hover:bg-gray-300 bg-white  text-gray-800 dark:bg-gray-800 dark:text-white"
+      className="hover:bg-gray-300 bg-white  text-gray-800 dark:bg-gray-800 dark:text-white text-xs md:text-balance px-2 md:px-4"
     >
       {mounted ? (theme === "dark" ? "🌙 Dark" : "☀️ Light") : null}
     </Button>

@@ -105,7 +105,7 @@ const Navbar = ({ onMenuClick, backGround }) => {
                 <button
                   type="button"
                   onClick={() => setOpen((prev) => !prev)}
-                  className="flex items-center gap-x-1 rounded-lg bg-gray-100 text-sm lg:text-base dark:bg-gray-900 border border-gray-300 dark:border-gray-700 px-3 py-1 cursor-pointer capitalize"
+                  className="flex items-center gap-x-1 text-xs rounded-lg bg-gray-100 md:text-sm lg:text-base dark:bg-gray-900 border  border-gray-300 dark:border-gray-700 px-1 md:px-3 py-2 md:py-1 cursor-pointer capitalize"
                 >
                   {mounted && user?.role ? user.role : null}
 
