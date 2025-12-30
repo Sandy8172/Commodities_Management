@@ -46,12 +46,12 @@ export const sidebarItems = [
     children: [
       {
         title: "Traffic",
-        href: "/traffic",
+        href: "#",
         icon: TrendingUp,
       },
       {
         title: "Earnings",
-        href: "/earnings",
+        href: "#",
         icon: DollarSign,
       },
     ],
